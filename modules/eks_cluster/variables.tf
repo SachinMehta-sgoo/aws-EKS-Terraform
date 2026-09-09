@@ -54,12 +54,6 @@ variable "vpc_cni_version" {
   default     = "v1.19.3-eksbuild.1"
 }
 
-variable "cluster_depends_on" {
-  description = "Optional dependency list to ensure prerequisite resources exist before cluster creation."
-  type        = list(any)
-  default     = []
-}
-
 variable "tags" {
   description = "Common tags applied to the cluster resource."
   type        = map(string)

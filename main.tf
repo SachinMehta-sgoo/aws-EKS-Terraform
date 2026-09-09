@@ -48,7 +48,6 @@ module "eks_cluster" {
   endpoint_private_access = true
   endpoint_public_access  = false
   cluster_log_types       = []
-  cluster_depends_on      = [module.vpc]
   tags                    = local.common_tags
 }
 
@@ -64,14 +63,12 @@ module "node_groups" {
   min_size           = var.node_min_capacity
   max_size           = var.node_max_capacity
   disk_size          = 20
-  depends_on         = [module.eks_cluster]
   tags               = local.common_tags
 }
 
 module "addons" {
   source = "./modules/addons"
 
-  cluster_name   = module.eks_cluster.cluster_name
+  cluster_name    = module.eks_cluster.cluster_name
   cluster_version = var.cluster_version
-  depends_on     = [module.node_groups]
 }

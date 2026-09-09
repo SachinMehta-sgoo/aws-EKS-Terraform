@@ -67,12 +67,6 @@ variable "ssh_key_name" {
   default     = ""
 }
 
-variable "depends_on" {
-  description = "Optional dependency resources to wait on before creating node groups."
-  type        = list(any)
-  default     = []
-}
-
 variable "tags" {
   description = "Common tags applied to the node group resources."
   type        = map(string)

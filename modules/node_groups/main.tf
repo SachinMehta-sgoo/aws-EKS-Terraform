@@ -30,6 +30,4 @@ resource "aws_eks_node_group" "this" {
   tags = merge(var.tags, {
     Name = "${var.cluster_name}-ng"
   })
-
-  depends_on = var.depends_on
 }

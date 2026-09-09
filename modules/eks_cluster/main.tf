@@ -19,8 +19,6 @@ resource "aws_eks_cluster" "this" {
   tags = merge(var.tags, {
     Name = "${var.cluster_name}-cluster"
   })
-
-  depends_on = var.cluster_depends_on
 }
 
 resource "aws_eks_addon" "vpc_cni" {

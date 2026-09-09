@@ -45,8 +45,3 @@ variable "kube_proxy_version" {
   default     = "v1.30.4-eksbuild.1"
 }
 
-variable "depends_on" {
-  description = "Dependencies required before add-ons are created."
-  type        = list(any)
-  default     = []
-}

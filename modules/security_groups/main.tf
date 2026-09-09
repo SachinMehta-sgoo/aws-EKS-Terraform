@@ -15,14 +15,6 @@ resource "aws_security_group" "cluster" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description = "Allow HTTPS from worker nodes to the control plane."
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    security_groups = [aws_security_group.node.id]
-  }
-
   tags = merge(var.tags, {
     Name = "${var.name}-eks-cluster-sg"
   })
@@ -49,15 +41,27 @@ resource "aws_security_group" "node" {
     self        = true
   }
 
-  ingress {
-    description = "Allow kubelet API and other required node ports from the control plane."
-    from_port   = 1025
-    to_port     = 65535
-    protocol    = "tcp"
-    security_groups = [aws_security_group.cluster.id]
-  }
-
   tags = merge(var.tags, {
     Name = "${var.name}-eks-node-sg"
   })
+}
+
+resource "aws_security_group_rule" "cluster_allow_https_from_nodes" {
+  description       = "Allow HTTPS from worker nodes to the EKS control plane."
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  security_group_id = aws_security_group.cluster.id
+  source_security_group_id = aws_security_group.node.id
+}
+
+resource "aws_security_group_rule" "node_allow_kubelet_from_cluster" {
+  description       = "Allow worker nodes to receive traffic from the EKS control plane."
+  type              = "ingress"
+  from_port         = 1025
+  to_port           = 65535
+  protocol          = "tcp"
+  security_group_id = aws_security_group.node.id
+  source_security_group_id = aws_security_group.cluster.id
 }
