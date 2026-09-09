@@ -1,0 +1,17 @@
+# Example values for a minimal private EKS test cluster.
+# Copy this file to terraform.tfvars and customize it for your environment.
+
+aws_region = "us-east-1"
+project_name = "demo-eks"
+environment = "test"
+
+vpc_cidr = "10.20.0.0/16"
+availability_zones = ["us-east-1a", "us-east-1b"]
+cluster_version = "1.30"
+node_instance_type = "t3.small"
+node_desired_capacity = 1
+node_min_capacity = 1
+node_max_capacity = 2
+
+# Keep SSH access empty unless you intentionally need direct EC2 access.
+# ssh_key_name = "my-ec2-key"
