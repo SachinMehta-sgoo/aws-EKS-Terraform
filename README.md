@@ -136,6 +136,44 @@ terraform apply
 aws eks update-kubeconfig --region us-east-1 --name demo-eks
 ```
 
+## Bastion access guide
+
+This repo includes a small EC2 bastion instance that is used only to access the private EKS cluster from inside the VPC.
+
+### Recommended SSH restriction
+Edit the `bastion_ssh_cidr` value in `terraform.tfvars` and replace `0.0.0.0/0` with your own public IP address in CIDR notation.
+
+Example:
+
+```hcl
+bastion_ssh_cidr = "203.0.113.10/32"
+```
+
+This is the safest pattern for a test environment because it limits SSH access to your machine.
+
+### Connect to the bastion
+After applying the Terraform, get the bastion public IP from AWS Console or from Terraform output:
+
+```bash
+terraform output
+```
+
+Then SSH to the bastion:
+
+```bash
+ssh -i ~/.ssh/your-key.pem ec2-user@<bastion-public-ip>
+```
+
+### Access the EKS cluster from the bastion
+Once connected to the bastion, run:
+
+```bash
+aws eks update-kubeconfig --region us-east-1 --name demo-eks
+kubectl get nodes
+```
+
+This works because the bastion is inside the same VPC and can reach the private EKS API endpoint.
+
 ## Destroy the environment
 
 ```bash

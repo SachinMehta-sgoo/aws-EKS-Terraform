@@ -27,3 +27,13 @@ output "kubectl_config_command" {
   description = "Example command to interact with the cluster using kubectl after the cluster is created."
   value       = "aws eks update-kubeconfig --region ${var.aws_region} --name ${module.eks_cluster.cluster_name}"
 }
+
+output "bastion_public_ip" {
+  description = "Public IP address of the bastion EC2 instance used to access the private EKS cluster."
+  value       = module.bastion.public_ip
+}
+
+output "bastion_ssh_command" {
+  description = "SSH command for connecting to the bastion EC2 instance. Replace the key path with your own PEM key file."
+  value       = "ssh -i ~/.ssh/your-key.pem ec2-user@${module.bastion.public_ip}"
+}

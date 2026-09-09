@@ -13,5 +13,12 @@ node_desired_capacity = 1
 node_min_capacity = 1
 node_max_capacity = 2
 
-# Keep SSH access empty unless you intentionally need direct EC2 access.
-# ssh_key_name = "my-ec2-key"
+# Restrict SSH to your own public IP or office/VPN range for safer bastion access.
+# Replace this with your actual public IP in CIDR format, for example: "203.0.113.10/32"
+# Keep the file local and do not commit it to Git.
+bastion_ssh_cidr = "203.0.113.10/32"
+
+# If you want SSH access to the bastion, create a key pair in AWS and set the key name here.
+# Example: ssh_key_name = "my-bastion-key"
+# If left empty, the bastion will still be created, but SSH access will be disabled.
+ssh_key_name = ""

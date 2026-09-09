@@ -65,3 +65,39 @@ resource "aws_security_group_rule" "node_allow_kubelet_from_cluster" {
   security_group_id = aws_security_group.node.id
   source_security_group_id = aws_security_group.cluster.id
 }
+
+resource "aws_security_group" "bastion" {
+  name        = "${var.name}-bastion-sg"
+  description = "Security group used by the bastion EC2 instance that accesses the private EKS cluster."
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description = "Allow SSH from the approved admin CIDR to the bastion instance."
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.bastion_ssh_cidr]
+  }
+
+  egress {
+    description = "Allow egress from bastion to the private EKS API and internet."
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(var.tags, {
+    Name = "${var.name}-bastion-sg"
+  })
+}
+
+resource "aws_security_group_rule" "cluster_allow_https_from_bastion" {
+  description              = "Allow bastion to reach the EKS control plane privately over HTTPS."
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.cluster.id
+  source_security_group_id = aws_security_group.bastion.id
+}

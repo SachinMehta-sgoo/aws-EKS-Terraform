@@ -58,6 +58,12 @@ variable "node_max_capacity" {
   default     = 2
 }
 
+variable "bastion_ssh_cidr" {
+  description = "CIDR block allowed to SSH into the bastion EC2 instance. Set this to your own public IP or VPN range before applying the stack."
+  type        = string
+  default     = "203.0.113.10/32"
+}
+
 variable "tags" {
   description = "Common tags applied to all resources for easier cost tracking and ownership."
   type        = map(string)

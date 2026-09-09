@@ -25,9 +25,10 @@ module "vpc" {
 module "security_groups" {
   source = "./modules/security_groups"
 
-  name   = var.project_name
-  vpc_id = module.vpc.vpc_id
-  tags   = local.common_tags
+  name             = var.project_name
+  vpc_id           = module.vpc.vpc_id
+  bastion_ssh_cidr = var.bastion_ssh_cidr
+  tags             = local.common_tags
 }
 
 module "iam" {
@@ -71,4 +72,15 @@ module "addons" {
 
   cluster_name    = module.eks_cluster.cluster_name
   cluster_version = var.cluster_version
+}
+
+module "bastion" {
+  source = "./modules/bastion"
+
+  name          = var.project_name
+  instance_type = "t3.micro"
+  subnet_id     = module.vpc.public_subnet_ids[0]
+  security_group_id = module.security_groups.bastion_security_group_id
+  key_name      = ""
+  tags          = local.common_tags
 }
