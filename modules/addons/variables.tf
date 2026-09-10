@@ -30,18 +30,18 @@ variable "enable_kube_proxy" {
 variable "ebs_csi_driver_version" {
   description = "Version of the EBS CSI driver addon."
   type        = string
-  default     = "v1.31.0-eksbuild.1"
+  default     = "v1.41.0-eksbuild.1"
 }
 
 variable "coredns_version" {
   description = "Version of CoreDNS for the cluster."
   type        = string
-  default     = "v1.11.3-eksbuild.1"
+  default     = "v1.14.3-eksbuild.16"
 }
 
 variable "kube_proxy_version" {
   description = "Version of kube-proxy for the cluster."
   type        = string
-  default     = "v1.30.4-eksbuild.1"
+  default     = "v1.35.3-eksbuild.21"
 }
 

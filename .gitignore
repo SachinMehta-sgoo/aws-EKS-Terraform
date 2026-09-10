@@ -10,6 +10,11 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
+# Local SSH keys (kept outside repo)
+aws-eks-keys/
+*.pem
+*.pub
+
 # OS/editor
 .DS_Store
 Thumbs.db

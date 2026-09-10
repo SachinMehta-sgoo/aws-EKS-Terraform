@@ -42,6 +42,16 @@ variable "cluster_log_types" {
   default     = []
 }
 
+variable "access_config" {
+  description = "EKS access configuration for authentication mode. API_AND_CONFIG_MAP keeps the legacy config-map flow while allowing API-based access."
+  type = object({
+    authentication_mode = optional(string, "API_AND_CONFIG_MAP")
+  })
+  default = {
+    authentication_mode = "API_AND_CONFIG_MAP"
+  }
+}
+
 variable "enable_vpc_cni_addon" {
   description = "Whether to install the VPC CNI addon. This is optional and can be managed through the addons module instead."
   type        = bool

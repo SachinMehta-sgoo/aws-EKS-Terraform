@@ -49,7 +49,10 @@ module "eks_cluster" {
   endpoint_private_access = true
   endpoint_public_access  = false
   cluster_log_types       = []
-  tags                    = local.common_tags
+  access_config = {
+    authentication_mode = "API_AND_CONFIG_MAP"
+  }
+  tags = local.common_tags
 }
 
 module "node_groups" {
@@ -60,6 +63,7 @@ module "node_groups" {
   security_group_ids = [module.security_groups.node_security_group_id]
   node_role_arn      = module.iam.node_role_arn
   instance_type      = var.node_instance_type
+  ami_type           = "AL2023_x86_64_STANDARD"
   desired_size       = var.node_desired_capacity
   min_size           = var.node_min_capacity
   max_size           = var.node_max_capacity
@@ -81,6 +85,6 @@ module "bastion" {
   instance_type = "t3.micro"
   subnet_id     = module.vpc.public_subnet_ids[0]
   security_group_id = module.security_groups.bastion_security_group_id
-  key_name      = ""
+  key_name      = var.ssh_key_name
   tags          = local.common_tags
 }

@@ -64,6 +64,12 @@ variable "bastion_ssh_cidr" {
   default     = "203.0.113.10/32"
 }
 
+variable "ssh_key_name" {
+  description = "Optional EC2 key pair name for bastion SSH access. Leave empty to disable SSH access."
+  type        = string
+  default     = ""
+}
+
 variable "tags" {
   description = "Common tags applied to all resources for easier cost tracking and ownership."
   type        = map(string)

@@ -50,9 +50,9 @@ variable "disk_size" {
 }
 
 variable "ami_type" {
-  description = "AMI type for EKS nodes. Default is Amazon Linux 2 optimized for EKS."
+  description = "AMI type for EKS nodes. AL2023 is supported for Kubernetes 1.35."
   type        = string
-  default     = "AL2_x86_64"
+  default     = "AL2023_x86_64_STANDARD"
 }
 
 variable "capacity_type" {

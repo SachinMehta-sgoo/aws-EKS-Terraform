@@ -14,6 +14,10 @@ resource "aws_eks_cluster" "this" {
     endpoint_public_access  = var.endpoint_public_access
   }
 
+  access_config {
+    authentication_mode = var.access_config.authentication_mode
+  }
+
   enabled_cluster_log_types = var.cluster_log_types
 
   tags = merge(var.tags, {
