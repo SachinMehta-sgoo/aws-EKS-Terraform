@@ -24,12 +24,3 @@ resource "aws_eks_cluster" "this" {
     Name = "${var.cluster_name}-cluster"
   })
 }
-
-resource "aws_eks_addon" "vpc_cni" {
-  count = var.enable_vpc_cni_addon ? 1 : 0
-
-  cluster_name      = aws_eks_cluster.this.name
-  addon_name        = "vpc-cni"
-  addon_version     = var.vpc_cni_version
-  resolve_conflicts = "OVERWRITE"
-}

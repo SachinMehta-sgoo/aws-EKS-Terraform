@@ -9,10 +9,10 @@ variable "cluster_version" {
   default     = "1.30"
 }
 
-variable "enable_ebs_csi_driver" {
-  description = "Whether to install the EBS CSI driver. Leave disabled during the initial test phase to keep dependencies minimal."
+variable "enable_vpc_cni" {
+  description = "Whether to install the VPC CNI add-on."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "enable_coredns" {
@@ -27,21 +27,45 @@ variable "enable_kube_proxy" {
   default     = true
 }
 
-variable "ebs_csi_driver_version" {
-  description = "Version of the EBS CSI driver addon."
+variable "enable_pod_identity_agent" {
+  description = "Whether to install the EKS Pod Identity Agent add-on."
+  type        = bool
+  default     = true
+}
+
+variable "enable_efs_csi_driver" {
+  description = "Whether to install the EFS CSI driver add-on."
+  type        = bool
+  default     = true
+}
+
+variable "vpc_cni_version" {
+  description = "Version of the VPC CNI add-on. Leave unset to use the latest supported version for the cluster."
   type        = string
-  default     = "v1.41.0-eksbuild.1"
+  default     = null
 }
 
 variable "coredns_version" {
-  description = "Version of CoreDNS for the cluster."
+  description = "Version of CoreDNS for the cluster. Leave unset to use the latest supported version for the cluster."
   type        = string
-  default     = "v1.14.3-eksbuild.16"
+  default     = null
 }
 
 variable "kube_proxy_version" {
-  description = "Version of kube-proxy for the cluster."
+  description = "Version of kube-proxy for the cluster. Leave unset to use the latest supported version for the cluster."
   type        = string
-  default     = "v1.35.3-eksbuild.21"
+  default     = null
+}
+
+variable "pod_identity_agent_version" {
+  description = "Version of the EKS Pod Identity Agent add-on. Leave unset to use the latest supported version for the cluster."
+  type        = string
+  default     = null
+}
+
+variable "efs_csi_driver_version" {
+  description = "Version of the EFS CSI driver add-on. Leave unset to use the latest supported version for the cluster."
+  type        = string
+  default     = null
 }
 

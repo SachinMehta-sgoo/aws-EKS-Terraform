@@ -52,18 +52,6 @@ variable "access_config" {
   }
 }
 
-variable "enable_vpc_cni_addon" {
-  description = "Whether to install the VPC CNI addon. This is optional and can be managed through the addons module instead."
-  type        = bool
-  default     = false
-}
-
-variable "vpc_cni_version" {
-  description = "Version of the VPC CNI addon to install when enabled."
-  type        = string
-  default     = "v1.19.3-eksbuild.1"
-}
-
 variable "tags" {
   description = "Common tags applied to the cluster resource."
   type        = map(string)
